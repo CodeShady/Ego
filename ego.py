@@ -4,7 +4,7 @@ import time
 
 # Config
 replaces = {
-    "out(": "print(",
+    "pout(": "print(",
     "func ": "def ",
     "->": "=",
     "{": "",
