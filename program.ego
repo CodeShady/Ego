@@ -1,0 +1,15 @@
+from time import sleep
+
+func wowzonks():
+    while True:
+        print("YAAHYAHYAHYAH")
+        sleep(0.1)
+
+isRunning[const] -> True
+myName[const] -> "John"
+
+
+while isRunning:
+	print("A second has passed.")
+	print("My name is still " + myName)
+	sleep(1)
