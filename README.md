@@ -37,3 +37,8 @@ Instead of **def**, you can use **func** to create a function. This is just a pr
 func sayHi():
 	print("Hello!")
 ```
+
+### Run your code
+```
+$ python3 ego.py program.ego
+```
