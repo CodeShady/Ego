@@ -1,14 +1,17 @@
 import sys
 import os
 import time
+import re
 
 # Config
 replaces = {
-    "pout(": "print(",
-    "func ": "def ",
-    "->": "=",
-    "{": "",
-    "}": "",
+    r"\bfunc\b": "def",
+    r"\bpout\b": "print",
+    r"--!": "!=",
+    r"-->": "==",
+    r"->": "=",
+    r"{": "",
+    r"}": "",
 }
 tmpfile = "./.egotmp.py"
 
@@ -34,10 +37,14 @@ def parse(data):
 
         # Check for constant variable
         if "[const]" in line:
-            variable_name = line[:line.index("[const]")].strip()
-            variable_data = line[line.index("->")+2:].strip()
-            variables[variable_name] = variable_data
-            continue
+            try:
+                variable_name = line[:line.index("[const]")].strip()
+                variable_data = line[line.index("->")+2:].strip()
+                variables[variable_name] = variable_data
+                continue
+            except ValueError as e:
+                print("\n\t[EGO] Error! ValueError error!\n")
+                print(e)
 
         newData.append(line)
 
@@ -48,6 +55,7 @@ def replace(data, variables):
 
     newData = []
 
+
     for line in data:
         lineData = line
 
@@ -57,7 +65,7 @@ def replace(data, variables):
 
         # Replace the replaces
         for key, value in replaces.items():
-            lineData = lineData.replace(key, value)
+            lineData = re.sub(key, value, lineData)
 
         newData.append(lineData)
 
@@ -66,7 +74,6 @@ def replace(data, variables):
 
 
 def run(code):
-    print(code)
     write_file(tmpfile, code)
     os.system("python3 " + tmpfile)
 
